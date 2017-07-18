@@ -2,6 +2,6 @@
 # auto required when the gem is loaded and we load existing crypto units.
 
 require 'bigdecimal'
-require 'crypto_unit_base'
-require 'satoshi'
-require 'litoshi'
+require_relative './crypto_unit_base'
+require_relative './satoshi'
+require_relative './litoshi'
