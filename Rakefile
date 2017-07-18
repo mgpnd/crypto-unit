@@ -14,11 +14,11 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://guides.rubygems.org/specification-reference/ for more options
-  gem.name = "satoshi-unit"
-  gem.homepage = "http://github.com/snitko/satoshi-unit"
+  gem.name = "crypto-unit"
+  gem.homepage = "http://github.com/mgpnd/crypto-unit"
   gem.license = "MIT"
-  gem.summary = %Q{Converts various bitcoin denominations in Satoshis and back}
-  gem.description = %Q{Converts various bitcoin denominations in Satoshis and back}
+  gem.summary = %Q{Converts various BTC and LTC denominations}
+  gem.description = %Q{Converts various BTC and LTC denominations}
   gem.email = "roman.snitko@gmail.com"
   gem.authors = ["Roman Snitko"]
   # dependencies defined in Gemfile
