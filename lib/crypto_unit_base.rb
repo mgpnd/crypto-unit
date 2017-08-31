@@ -26,23 +26,23 @@ class CryptoUnit
     @value = convert_to_primary(n) if n
   end
 
-  def to_standart(as: :number)
-    to_denomination(UNIT_DENOMINATIONS[:standart], as: as)
+  def to_standart(as: :number, format_zero: false)
+    to_denomination(UNIT_DENOMINATIONS[:standart], as: as, format_zero: format_zero)
   end
 
-  def to_milli(as: :number)
-    to_denomination(UNIT_DENOMINATIONS[:milli], as: as)
+  def to_milli(as: :number, format_zero: false)
+    to_denomination(UNIT_DENOMINATIONS[:milli], as: as, format_zero: format_zero)
   end
 
-  def to_unit(as: :number)
-    to_denomination(UNIT_DENOMINATIONS[@to_unit], as: as)
+  def to_unit(as: :number, format_zero: false)
+    to_denomination(UNIT_DENOMINATIONS[@to_unit], as: as, format_zero: format_zero)
   end
 
   def to_i
     return 0 if @value.nil?
     @value
   end
-  alias :primary_value :to_i 
+  alias :primary_value :to_i
 
   def to_s
     to_unit.to_s
@@ -112,8 +112,8 @@ class CryptoUnit
   end
 
   protected
-  
-    def to_denomination(digits_after_delimiter, as: :number)
+
+    def to_denomination(digits_after_delimiter, as: :number, format_zero: false)
       sign  = @value < 0 ? -1 : 1
       val   = @value.abs
       return val if digits_after_delimiter <= 0
@@ -124,10 +124,10 @@ class CryptoUnit
       result.reverse!
       result = result.sub(/\A0*/, '').sub(/0*\Z/, '') # remove zeros on both sides
       if as == :number
-        result.to_f*sign 
+        result.to_f*sign
       else
         if result == '.'
-          result = '0.0'
+          result = format_zero ? '0' : '0.0'
         elsif result =~ /\A\./
           result = "0#{result}"
         end
@@ -147,7 +147,7 @@ class CryptoUnit
 
       if decimal_part_length > UNIT_DENOMINATIONS[@from_unit]
         raise TooManyDigitsAfterDecimalPoint,
-          "Too many digits (#{decimal_part_length}) after decimal point used for #{@from_unit} value, while #{UNIT_DENOMINATIONS[@from_unit]} allowed" 
+          "Too many digits (#{decimal_part_length}) after decimal point used for #{@from_unit} value, while #{UNIT_DENOMINATIONS[@from_unit]} allowed"
       end
 
       n = ("%.#{UNIT_DENOMINATIONS[@from_unit]}f" % n) # otherwise we might see a scientific notation
