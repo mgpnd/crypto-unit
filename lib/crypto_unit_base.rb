@@ -130,6 +130,8 @@ class CryptoUnit
           result = format_zero ? '0' : '0.0'
         elsif result =~ /\A\./
           result = "0#{result}"
+        elsif result =~ /\.\Z/
+          result = format_zero ? result[0..-2] : "#{result}0"
         end
         sign == -1 ? "-#{result}" : result
       end
